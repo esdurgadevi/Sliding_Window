@@ -111,3 +111,65 @@ class Solution {
 - In the else part we put the character and update the max value that is i-left+1.
 - Finally we return the max value.
 > [Reference](https://www.youtube.com/watch?v=-zSxTJkcdAo)
+### 1004. Max Consecutive Ones III
+[Leetcode link](https://leetcode.com/problems/max-consecutive-ones-iii/description/)
+<br>
+Given a binary array nums and an integer k, return the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+Example 1:
+Input: nums = [1,1,1,0,0,0,1,1,1,1,0], k = 2
+Output: 6
+Explanation: [1,1,1,0,0,1,1,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+Example 2:
+Input: nums = [0,0,1,1,0,0,1,1,1,0,1,1,0,0,0,1,1,1,1], k = 3
+Output: 10
+Explanation: [0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is underlined.
+
+Constraints:
+1 <= nums.length <= 105
+nums[i] is either 0 or 1.
+0 <= k <= nums.length
+
+Hints:
+<br>
+- One thing's for sure, we will only flip a zero if it extends an existing window of 1s. Otherwise, there's no point in doing it, right? Think Sliding Window!
+- Since we know this problem can be solved using the sliding window construct, we might as well focus in that direction for hints. Basically, in a given window, we can never have > K zeros, right?
+- We don't have a fixed size window in this case. The window size can grow and shrink depending upon the number of zeros we have (we don't actually have to flip the zeros here!).
+- The way to shrink or expand a window would be based on the number of zeros that can still be flipped and so on.
+```java
+class Solution {
+    public int longestOnes(int[] nums, int k) {
+        int left = 0;
+        int max = 0;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==1) max = Math.max(max,(i-left+1));
+            else
+            {
+                if(k>0)
+                {
+                    max = Math.max(max,(i-left+1));
+                    k--;
+                }
+                else
+                {
+                   while(nums[left]==1)
+                   {
+                      left++;
+                   }
+                   left+=1;
+                }
+            }
+        }
+        return max;
+    }
+}
+```
+- In this code we find the maximum consicutive ones with by flip atmost k zeroes.
+- so first we fix the left pointer by 0 and to move over all the element if the element is one then we increse the count.
+- Other wise it means zero if the k is greater than 0 then we increase the count because it is consider as the flipping zero.
+- if the element is zero also the k value is 0 then we must move the left pointer to decrease the zeroes cout so we increase the left pointer until it reach the zero after increase by one it means that we remove the first occuring zero from the current window.
+> [Reference](https://www.youtube.com/watch?v=3E4JBHSLpYk&list=TLPQMTIxMDIwMjQWPwI8DtNRUQ&index=2)
