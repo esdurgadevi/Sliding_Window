@@ -173,3 +173,46 @@ class Solution {
 - Other wise it means zero if the k is greater than 0 then we increase the count because it is consider as the flipping zero.
 - if the element is zero also the k value is 0 then we must move the left pointer to decrease the zeroes cout so we increase the left pointer until it reach the zero after increase by one it means that we remove the first occuring zero from the current window.
 > [Reference](https://www.youtube.com/watch?v=3E4JBHSLpYk&list=TLPQMTIxMDIwMjQWPwI8DtNRUQ&index=2)
+### 219. Contains Duplicate II
+[Leetcode link](https://leetcode.com/problems/contains-duplicate-ii/?envType=problem-list-v2&envId=sliding-window&status=TO_DO&difficulty=EASY)
+<br>
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+
+Example 1:
+Input: nums = [1,2,3,1], k = 3
+Output: true
+
+Example 2:
+Input: nums = [1,0,1,1], k = 1
+Output: true
+
+Example 3:
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+
+Constraints:
+1 <= nums.length <= 105
+-109 <= nums[i] <= 109
+0 <= k <= 105
+
+```java
+class Solution {
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for(int i=0;i<nums.length;i++)
+        {
+            if(!map.containsKey(nums[i])) map.put(nums[i],i);
+            else
+            {
+                if(Math.abs(i-map.get(nums[i]))<=k) return true;
+                map.remove(nums[i]);
+                map.put(nums[i],i);
+            }
+        }
+        return false;
+    }
+}
+```
+- In this code we return true if the i-j and nums[i] == nums[j] is less than the k so whenever we see the number in first time that time we add to the map.
+- If we see the second time then we check if the difference between the current poistion and the previous poistion is less than or equal to the k if it is then we rrturn true.
+- Else we remove the first occurence and add the current occurence.
