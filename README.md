@@ -343,3 +343,60 @@ class Solution {
 - In this method we will use the sliding window techniques that is already they given the hints.
 - If we sort the array and from the left to right when will the arr[r] - arr[l] is less then equal to 2*k then that is valid subsequence then update the max value finally return max value.
 > [Reference](https://www.youtube.com/watch?v=x29QnzSBFVI)
+### 345. Reverse Vowels of a String
+[Leetcode link](https://leetcode.com/problems/reverse-vowels-of-a-string/description/)
+<br>
+Given a string s, reverse only all the vowels in the string and return it.
+
+The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower and upper cases, more than once.
+
+ 
+
+Example 1:
+
+Input: s = "IceCreAm"
+
+Output: "AceCreIm"
+
+Explanation:
+
+The vowels in s are ['I', 'e', 'e', 'A']. On reversing the vowels, s becomes "AceCreIm".
+
+Example 2:
+
+Input: s = "leetcode"
+
+Output: "leotcede"
+
+ 
+
+Constraints:
+
+1 <= s.length <= 3 * 105
+s consist of printable ASCII characters.
+
+```c
+ int iscom(char ch)
+{
+    if(ch=='a' || ch=='e' || ch=='i' || ch=='o' || ch=='u' || ch=='A' || ch=='E' || ch=='I' || ch=='O' || ch=='U')
+    {
+        return false;
+    }
+    return true;
+}
+char* reverseVowels(char* s) {
+    int l=0;
+    int r=strlen(s)-1;
+    while(l<r)
+    {
+        while(l<r && iscom(s[l])) l++;
+        while(r>l && iscom(s[r])) r--;
+        char ch = s[l];
+        s[l] = s[r];
+        s[r] = ch;
+        l++;
+        r--;
+    }
+    return s;
+}
+```
