@@ -491,3 +491,54 @@ class Solution {
 }
 ```
 > [Reference](https://www.youtube.com/watch?v=2wANakxRZNo)
+
+### 1358. Number of Substrings Containing All Three Characters
+[Leetcod link](https://leetcode.com/problems/number-of-substrings-containing-all-three-characters/?envType=daily-question&envId=2025-03-14)
+<br>
+Given a string s consisting only of characters a, b and c.
+Return the number of substrings containing at least one occurrence of all these characters a, b and c.
+
+Example 1:
+Input: s = "abcabc"
+Output: 10
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "abc", "abca", "abcab", "abcabc", "bca", "bcab", "bcabc", "cab", "cabc" and "abc" (again). 
+
+Example 2:
+Input: s = "aaacb"
+Output: 3
+Explanation: The substrings containing at least one occurrence of the characters a, b and c are "aaacb", "aacb" and "acb". 
+
+Example 3:
+Input: s = "abc"
+Output: 1
+ 
+
+Constraints:
+3 <= s.length <= 5 x 10^4
+s only consists of a, b or c characters.
+
+```java
+class Solution {
+    public int numberOfSubstrings(String s) {
+        HashMap<Character,Integer> map = new HashMap<>();
+        int left = 0;
+        int right = 0;
+        int ans = 0;
+        int n = s.length();
+        while(right<n)
+        {
+            map.put(s.charAt(right),map.getOrDefault(s.charAt(right),0)+1);
+            while(map.getOrDefault('a',0)>=1 && map.getOrDefault('b',0)>=1 && map.getOrDefault('c',0)>=1)
+            {
+                ans += (n-right);
+                int temp = map.get(s.charAt(left));
+                map.remove(s.charAt(left));
+                if(temp-1>0) map.put(s.charAt(left),temp-1);
+                left++;
+            }
+            right++;
+        }
+        return ans;
+    }
+}
+```
