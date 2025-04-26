@@ -605,3 +605,50 @@ class Solution {
 > Time Complexity : O(n logn)
 #### Binary Search Method
 ```java
+```
+### 560. Subarray Sum Equals K
+[Leetcode link](https://leetcode.com/problems/count-of-interesting-subarrays/?envType=daily-question&envId=2025-04-26)
+<br>
+Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+
+A subarray is a contiguous non-empty sequence of elements within an array.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,1], k = 2
+Output: 2
+Example 2:
+
+Input: nums = [1,2,3], k = 3
+Output: 2
+ 
+
+Constraints:
+
+1 <= nums.length <= 2 * 104
+-1000 <= nums[i] <= 1000
+-107 <= k <= 107
+
+```java
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int prefix_sum = 0;
+        int count = 0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
+        for(int i=0;i<nums.length;i++)
+        {
+            prefix_sum += nums[i];
+            if(map.containsKey(prefix_sum-k)) count += map.get(prefix_sum-k);
+            map.put(prefix_sum,map.getOrDefault(prefix_sum,0)+1);
+        }
+        return count;
+    }
+}
+```
+- For each time we update the prefix sum by add the current element.
+- And we check if the prefixsum-k  will there in the previous calculation or not.
+- Because we want to calculate the number of sub arrays with sum k  we calculate the prefix sum till the current index and we search if the prefix sum-k  is exist or not.
+- If exist then add the number of time that will exist.
