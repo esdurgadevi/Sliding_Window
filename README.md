@@ -652,3 +652,96 @@ class Solution {
 - And we check if the prefixsum-k  will there in the previous calculation or not.
 - Because we want to calculate the number of sub arrays with sum k  we calculate the prefix sum till the current index and we search if the prefix sum-k  is exist or not.
 - If exist then add the number of time that will exist.
+
+### 2444. Count Subarrays With Fixed Bounds
+[Leetcode link](https://leetcode.com/problems/count-subarrays-with-fixed-bounds/description/?envType=daily-question&envId=2025-04-26)
+<br>
+You are given an integer array nums and two integers minK and maxK.
+
+A fixed-bound subarray of nums is a subarray that satisfies the following conditions:
+
+The minimum value in the subarray is equal to minK.
+The maximum value in the subarray is equal to maxK.
+Return the number of fixed-bound subarrays.
+
+A subarray is a contiguous part of an array.
+
+ 
+
+Example 1:
+
+Input: nums = [1,3,5,2,7,5], minK = 1, maxK = 5
+Output: 2
+Explanation: The fixed-bound subarrays are [1,3,5] and [1,3,5,2].
+Example 2:
+
+Input: nums = [1,1,1,1], minK = 1, maxK = 1
+Output: 10
+Explanation: Every subarray of nums is a fixed-bound subarray. There are 10 possible subarrays.
+ 
+
+Constraints:
+
+2 <= nums.length <= 105
+1 <= nums[i], minK, maxK <= 106
+
+```java
+class Solution {
+    public long countSubarrays(int[] nums, int minK, int maxK) {
+        long ans = 0;
+        int badi = -1,maxi = -1,mini = -1;
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]<minK || nums[i]>maxK) badi = i;
+            if(nums[i] == minK) mini = i;
+            if(nums[i] == maxK) maxi = i;
+            ans += Math.max(0,Math.min(mini,maxi)-badi);
+        }
+        return ans;
+    }
+}
+```
+> [Reference](https://www.youtube.com/watch?v=Bk-HxzaooqM)
+
+### 560. Subarray Sum Equals K
+[Leetcode link](https://leetcode.com/problems/subarray-sum-equals-k/)
+<br>
+Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+
+A subarray is a contiguous non-empty sequence of elements within an array.
+
+ 
+
+Example 1:
+
+Input: nums = [1,1,1], k = 2
+Output: 2
+Example 2:
+
+Input: nums = [1,2,3], k = 3
+Output: 2
+ 
+
+Constraints:
+
+1 <= nums.length <= 2 * 104
+-1000 <= nums[i] <= 1000
+-107 <= k <= 107
+
+```java
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        int prefix_sum = 0;
+        int count = 0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
+        for(int i=0;i<nums.length;i++)
+        {
+            prefix_sum += nums[i];
+            if(map.containsKey(prefix_sum-k)) count += map.get(prefix_sum-k);
+            map.put(prefix_sum,map.getOrDefault(prefix_sum,0)+1);
+        }
+        return count;
+    }
+}
+```
